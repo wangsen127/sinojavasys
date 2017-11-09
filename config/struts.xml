@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.action.extension" value="html,do,"></constant>
+	<package name="myDefault" extends="struts-default" abstract="true">
+		<interceptors>
+			<!-- 配置全局拦截器 -->
+			<interceptor name="loginInterceptor" class="com.sinojava.core.LoginInterceptor">
+				<param name="freeAction">
+					/login.do,
+					/user/checkUser.do,
+					/user/listAreaAll.do,
+					/stu/listStuclassByArea.do
+				</param>
+			</interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 将默认拦截器的引用设置为自定义拦截器栈 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<global-results>
+			<result name="login" type="redirect">/login.jsp</result>
+			<result name="ask" type="redirect">/ask.jsp</result>
+			<result name="reg" type="redirect">/reg.jsp</result>
+			<result name="index" type="redirect">/index.jsp</result>
+		</global-results>
+	</package>
+	
+	<package name="sys" extends="myDefault" namespace="/">
+		<action name="login" class="sysAction" method="login">
+			<result>/login.jsp</result>
+		</action>
+		<action name="reg" class="sysAction" method="reg">
+			<result>/reg.jsp</result>
+		</action>
+		<action name="ask" class="sysAction" method="ask">
+			<result>/ask.jsp</result>
+		</action>
+		<action name="index" class="sysAction" method="index">
+			<result>/index.jsp</result>
+		</action>
+	</package>
+	
+	<package name="user" extends="myDefault" namespace="/user">
+		<action name="listUser" class="userAction" method="listUser"></action>
+		<action name="checkUser" class="userAction" method="checkUser"></action>
+		<action name="saveUser" class="userAction" method="saveUser"></action>
+		<action name="delBatchUser" class="userAction" method="delBatchUser"></action>
+		<action name="getUser" class="userAction" method="getUser"></action>
+		<action name="editUser" class="userAction" method="editUser"></action>
+		<action name="resetPassword" class="userAction" method="resetPassword"></action>
+		<action name="registerStudent" class="userAction" method="registerStudent">
+		</action>
+		<action name="login" class="userAction" method="login">
+		</action>
+		<action name="logout" class="userAction" method="logout">
+		</action>
+		
+		<action name="listArea" class="areaAction" method="listArea"></action>
+		<action name="listAreaAll" class="areaAction" method="listAreaAll"></action>
+		<action name="listAreaAll2" class="areaAction" method="listAreaAll2"></action>
+		<action name="saveArea" class="areaAction" method="saveArea"></action>
+		<action name="delBatchArea" class="areaAction" method="delBatchArea"></action>
+		<action name="getArea" class="areaAction" method="getArea"></action>
+		<action name="editArea" class="areaAction" method="editArea"></action>
+		<action name="listAreaByUserid" class="areaAction" method="listAreaByUserid"></action>
+		<action name="saveUserArea" class="areaAction" method="saveUserArea"></action>
+	</package>
+	
+	<package name="stu" extends="myDefault" namespace="/stu">
+		<action name="listStuclass" class="stuclassAction" method="listStuclass"></action>
+		<action name="saveStuclass" class="stuclassAction" method="saveStuclass"></action>
+		<action name="delBatchStuclass" class="stuclassAction" method="delBatchStuclass"></action>
+		<action name="getStuclass" class="stuclassAction" method="getStuclass"></action>
+		<action name="editStuclass" class="stuclassAction" method="editStuclass"></action>
+		<action name="endClass" class="stuclassAction" method="endClass"></action>
+		<action name="listStuclassByArea" class="stuclassAction" method="listStuclassByArea"></action>
+		
+		<action name="listStudent" class="studentAction" method="listStudent"></action>
+		<action name="getStudent" class="studentAction" method="getStudent"></action>
+		<action name="editStudent" class="studentAction" method="editStudent"></action>
+		<action name="delBatchStudent" class="studentAction" method="delBatchStudent"></action>
+		<action name="editStudentClass" class="studentAction" method="editStudentClass"></action>
+		<action name="listStudentClassRecordBySid" class="studentAction" method="listStudentClassRecordBySid"></action>
+	</package>
+	
+	<!-- 进度调查表 -->
+	<package name="inq" extends="myDefault" namespace="/inq">
+		<action name="saveInq" class="inqAction" method="saveInq">
+			<result type="redirect">/ask2.jsp</result>
+		</action>
+		<action name="listInq" class="inqAction" method="listInq"></action>
+		<action name="editInq" class="inqAction" method="editInq"></action>
+		<action name="delBatchInq" class="inqAction" method="delBatchInq"></action>
+	
+		<action name="listFeedback" class="feedbackAction" method="listFeedback"></action>
+		<action name="saveFeedback" class="feedbackAction" method="saveFeedback"></action>
+		<action name="getFeedback" class="feedbackAction" method="getFeedback"></action>
+		<action name="editFeedback" class="feedbackAction" method="editFeedback"></action>
+		<action name="delBatchFeedback" class="feedbackAction" method="delBatchFeedback"></action>
+		<action name="listFeedbackBySid" class="feedbackAction" method="listFeedbackBySid"></action>
+		<action name="doFeedback" class="feedbackAction" method="doFeedback"></action>
+		<action name="finishFeedback" class="feedbackAction" method="finishFeedback"></action>
+	</package>
+		
+</struts>
